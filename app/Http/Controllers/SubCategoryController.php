@@ -33,6 +33,7 @@ class SubCategoryController extends Controller
                 SubCategory::insert([
                     'name' => $request->name,
                     'category_id' => $category->id,
+                    'created_at' => date('Y-m-d h:m:i'),
 
                 ]);
                 return response()->json("Successfully Data Added");
@@ -72,7 +73,7 @@ class SubCategoryController extends Controller
                 SubCategory::where('id', $subcategory)->update([
                     'name' => $request->name,
                     'category_id' => $category->id,
-
+                    'updated_at' => date('Y-m-d h:m:i'),
                 ]);
                 return response()->json("Successfully Data Updated");
             } catch (Exception $e) {
@@ -81,8 +82,6 @@ class SubCategoryController extends Controller
         } else {
             return response()->json("Category Not Fond In our Records");
         }
-
-       
     }
 
     /**
@@ -90,6 +89,11 @@ class SubCategoryController extends Controller
      */
     public function destroy($subcategory)
     {
-        return   SubCategory::destroy($subcategory);
+        try {
+            SubCategory::destroy($subcategory);
+            return response()->json("Successfully Data delete");
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 }

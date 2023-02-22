@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChildCategoryController;
+use App\Http\Controllers\FullGetApiController;
 use App\Http\Controllers\SubCategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +25,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('category', CategoryController::class);
 Route::resource('subcategory', SubCategoryController::class);
 Route::resource('childcategory', ChildCategoryController::class);
+Route::get('get/all', [FullGetApiController::class,'index']);

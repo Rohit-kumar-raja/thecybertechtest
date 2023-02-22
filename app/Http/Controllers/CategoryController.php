@@ -28,8 +28,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         Category::insert($request->except('_token'));
+        return response()->json("Successfully  Category Added");
     }
 
     /**
@@ -51,16 +52,18 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request,  $category)
     {
-        //
+        Category::where('id', $category)->update($request->except('_token'));
+        return response()->json("Successfully  Category Updated");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($category)
     {
-        //
+        Category::destroy($category);
+        return response()->json("Successfully  Category Delete");
     }
 }

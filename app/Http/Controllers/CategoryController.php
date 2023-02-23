@@ -29,7 +29,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
 
-        Category::insert($request->except('_token'));
+        $id = Category::insertGetId($request->except('_token'));
+        if ($request->file('image')) {
+            Category::where('id', $id)->update(['image' => $this->insert_image($request->file('image'), 'category')]);
+        }
+
         return response()->json("Successfully  Category Added");
     }
 
@@ -55,6 +59,9 @@ class CategoryController extends Controller
     public function update(Request $request,  $category)
     {
         Category::where('id', $category)->update($request->except('_token'));
+        if ($request->file('image')) {
+            $this->update_images('categories', $category, $request->file('image'), 'category');
+        }
         return response()->json("Successfully  Category Updated");
     }
 

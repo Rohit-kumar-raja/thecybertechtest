@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Exception;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -70,6 +71,12 @@ class CategoryController extends Controller
      */
     public function destroy($category)
     {
+        $image_name = Category::find($category);
+        $image_name = $image_name->images;
+        try {
+            unlink(public_path('category/' . $image_name));
+        } catch (Exception $e) {
+        }
         Category::destroy($category);
         return response()->json("Successfully  Category Delete");
     }
